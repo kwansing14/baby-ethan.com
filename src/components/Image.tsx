@@ -32,7 +32,7 @@ const ImageComponent: React.FC<ImageProps> = ({ imageData }) => {
   }
   if (imageData?.orientation === "portrait") {
     return (
-      <div className="relative aspect-[3/4] sm:row-span-2">
+      <div className="relative aspect-[3/4] sm:row-span-2 sm:aspect-auto">
         <Image
           alt="photo 1"
           className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
