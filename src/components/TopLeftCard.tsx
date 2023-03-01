@@ -4,12 +4,21 @@ import Image from "next/image";
 import { isImage, validateSize } from "@/src/utils/fileValidation";
 import { api } from "@/src/utils/api";
 type Orientation = "portrait" | "landscape" | "";
+import toast from 'react-hot-toast';
 
 const TopLeftCard = () => {
   const [image, setImage] = useState<File>();
   const [orientation, setOrientation] = useState<Orientation>("");
   const [imgSrc, setImgSrc] = useState("");
-  const generateImg = api.image.uploadImg.useMutation();
+  const generateImg = api.image.uploadImg.useMutation({
+    onMutate: () =>
+      toast.loading("Uploading...", { id: "imageUpload" }),
+    onSuccess: () => toast.success("Done!", { id: "imageUpload" }),
+    onError: (e) =>
+      toast.error(`Error: ${e.data?.code || ""}`, {
+        id: "imageUpload",
+      }),
+  });
   const createImage = () => generateImg.mutate({ img: imgSrc, orientation });
 
   const handleImageLoaded = (
@@ -35,6 +44,7 @@ const TopLeftCard = () => {
     const result = isImage(img.name);
     if (!result) {
       const error = "File type should be a image";
+      toast.error(error)
       // toast(error, { type: 'error' });
       console.log(error);
       // setImageError(error);
@@ -43,6 +53,7 @@ const TopLeftCard = () => {
     const isImageLarge = validateSize(img);
     if (isImageLarge) {
       const error = "File must be less or equal to 5MB";
+      toast.error(error)
       console.log(error);
       // toast(error, { type: 'error' });
       // setImageError(error);
