@@ -7,7 +7,7 @@ export const imageRouter = createTRPCRouter({
   getImages: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.imagesUser.findMany();
   }),
-  uploadImg: publicProcedure
+  uploadImg: protectedProcedure
     .input(z.object({ img: z.string(), orientation: z.string() }))
     .mutation(async ({ ctx, input }) => {
       if (!ctx.session || !ctx.session.user.id) return;

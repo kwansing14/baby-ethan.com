@@ -3,6 +3,7 @@ import { type Session } from "next-auth";
 import { SessionProvider } from "next-auth/react";
 import { Toaster } from "react-hot-toast";
 import { api } from "../utils/api";
+import { Sofia_Sans } from "next/font/google";
 
 import "../styles/globals.css";
 
