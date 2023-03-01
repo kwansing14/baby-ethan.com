@@ -4,7 +4,7 @@ interface SizeProp {
 
 export const validateSize = (file: SizeProp) => {
   if (!file) return
-  if (file.size > 5000000) {
+  if (file.size > 10000000) {
       return true
   } else {
       return false

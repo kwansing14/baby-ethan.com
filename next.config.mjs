@@ -9,7 +9,10 @@
 /** @type {import("next").NextConfig} */
 const config = {
   reactStrictMode: true,
-
+  images: {
+    formats: ["image/avif", "image/webp"],
+    domains: ["res.cloudinary.com"],
+  },
   /**
    * If you have the "experimental: { appDir: true }" setting enabled, then you
    * must comment the below `i18n` config out.

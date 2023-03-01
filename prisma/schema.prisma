@@ -6,11 +6,7 @@ generator client {
 }
 
 datasource db {
-    provider = "sqlite"
-    // NOTE: When using postgresql, mysql or sqlserver, uncomment the @db.Text annotations in model Account below
-    // Further reading:
-    // https://next-auth.js.org/adapters/prisma#create-the-prisma-schema
-    // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
+    provider = "cockroachdb"
     url      = env("DATABASE_URL")
 }
 
@@ -67,8 +63,9 @@ model VerificationToken {
 }
 
 model ImagesUser {
-    id        String @unique
-    userId    String
-    image_url String
-    user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    id          String @id @default(cuid())
+    userId      String
+    image_url   String
+    orientation String
+    user        User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

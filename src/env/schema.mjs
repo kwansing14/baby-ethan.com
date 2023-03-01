@@ -9,6 +9,8 @@ export const serverSchema = z.object({
   CLOUDINARY_API_KEY: z.string(),
   CLOUDINARY_API_SECRET: z.string(),
   CLOUDINARY_NAME: z.string(),
+  GOOGLE_ID: z.string(),
+  GOOGLE_SECRET: z.string(),
 });
 
 /**
@@ -20,7 +22,9 @@ export const serverEnv = {
   NODE_ENV: process.env.NODE_ENV,
   CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
-  CLOUDINARY_NAME: process.env.CLOUDINARY_NAME
+  CLOUDINARY_NAME: process.env.CLOUDINARY_NAME,
+  GOOGLE_ID: process.env.GOOGLE_ID,
+  GOOGLE_SECRET: process.env.GOOGLE_SECRET,
 };
 
 /**
