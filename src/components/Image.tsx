@@ -1,21 +1,53 @@
 import Image from "next/image";
+import { clsx } from "clsx";
 
 interface ImageProps {
   imageData:
     | {
         image_url: string;
         orientation: string;
+        id: string;
       }
     | undefined;
+  setSelectedDeleteImages: React.Dispatch<React.SetStateAction<string[]>>;
+  isDeletingImages: boolean;
+  selectedDeleteImages: string[];
 }
 
-const ImageComponent: React.FC<ImageProps> = ({ imageData }) => {
+const ImageComponent: React.FC<ImageProps> = ({
+  imageData,
+  setSelectedDeleteImages,
+  isDeletingImages,
+  selectedDeleteImages,
+}) => {
+  const clickHandler = (id: string) => {
+    if (isDeletingImages) {
+      if (selectedDeleteImages.includes(id)) {
+        setSelectedDeleteImages(
+          selectedDeleteImages.filter((item) => item !== id)
+        );
+      } else {
+        setSelectedDeleteImages((prev) => [...prev, id]);
+      }
+    }
+  };
+
+  const checkId = (id: string) => {
+    if (isDeletingImages) {
+      return selectedDeleteImages.includes(id);
+    }
+    return false;
+  };
+
   if (imageData?.orientation === "landscape") {
     return (
       <div className="relative aspect-[4/3]">
         <Image
           alt="photo 1"
-          className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
+          className={clsx(
+            "transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110",
+            { "cursor-pointer border": checkId(imageData?.id) }
+          )}
           style={{
             transform: "translate3d(0, 0, 0)",
             objectFit: "cover",
@@ -26,6 +58,7 @@ const ImageComponent: React.FC<ImageProps> = ({ imageData }) => {
             (max-width: 1280px) 50vw,
             (max-width: 1536px) 33vw,
             25vw"
+          onClick={() => clickHandler(imageData?.id)}
         />
       </div>
     );
@@ -35,7 +68,10 @@ const ImageComponent: React.FC<ImageProps> = ({ imageData }) => {
       <div className="relative aspect-[3/4] sm:row-span-2 sm:aspect-auto">
         <Image
           alt="photo 1"
-          className="transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110"
+          className={clsx(
+            "transform rounded-lg brightness-90 transition will-change-auto group-hover:brightness-110",
+            { border: checkId(imageData?.id) }
+          )}
           style={{
             transform: "translate3d(0, 0, 0)",
             objectFit: "cover",
@@ -46,6 +82,7 @@ const ImageComponent: React.FC<ImageProps> = ({ imageData }) => {
             (max-width: 1280px) 50vw,
             (max-width: 1536px) 33vw,
             25vw"
+          onClick={() => clickHandler(imageData?.id)}
         />
       </div>
     );

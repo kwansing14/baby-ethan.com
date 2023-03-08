@@ -7,15 +7,22 @@ import { Sofia_Sans } from "next/font/google";
 
 import "../styles/globals.css";
 
+const sofiaSans = Sofia_Sans({
+  subsets: ["latin"],
+  variable: "--font-sofia-sans",
+});
+
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <SessionProvider session={session}>
-      <Component {...pageProps} />
-      <Toaster />
-    </SessionProvider>
+    <main className={`${sofiaSans.variable} font-sans`}>
+      <SessionProvider session={session}>
+        <Component {...pageProps} />
+        <Toaster />
+      </SessionProvider>
+    </main>
   );
 };
 
