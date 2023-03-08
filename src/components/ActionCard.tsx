@@ -3,7 +3,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { isImage, validateSize } from "@/src/utils/fileValidation";
 import { api } from "@/src/utils/api";
-
+import { resizeFile } from "@/src/utils/imageResizer";
 // type Orientation = "portrait" | "landscape" | "";
 
 interface Prop {
@@ -29,7 +29,7 @@ const ActionCard: React.FC<Prop> = ({ setIsDeletingImages }) => {
   });
   const createMultiImage = () => generateMultiImg.mutate({ imgs: images });
 
-  const handleImageFile = (imgFile: File) => {
+  const handleImageFile = async(imgFile: File) => {
     const result = isImage(imgFile.name);
     if (!result) {
       const error = "File type should be a image";
@@ -42,11 +42,28 @@ const ActionCard: React.FC<Prop> = ({ setIsDeletingImages }) => {
       toast.error(error, { id: imgFile.name });
       return;
     }
+    const resizedImg = await resizeFile(imgFile) as string;
+    console.log('resizedImg', resizedImg);
+    const imgUrl = resizedImg;
+    const img = new Image();
+      img.src = imgUrl;
+      img.onload = (e) => {
+        const image = e.target as HTMLImageElement;
+        // set Images with orientation;
+        if (image.width > image.height) {
+          setImages((prev) => [...prev, { imgUrl, orientation: "landscape" }]);
+        } else {
+          setImages((prev) => [...prev, { imgUrl, orientation: "portrait" }]);
+        }
+      };
+      toast.success("Success", { id: imgFile.name });
+    return;
     const reader = new FileReader();
     reader.readAsDataURL(imgFile);
     reader.addEventListener("load", () => {
       // use reader load to get image Url
       const resFile = reader.result as string;
+      console.log("resFile", resFile);
       const imgUrl = resFile;
       // use onload to get image orientation
       const img = new Image();
@@ -66,13 +83,13 @@ const ActionCard: React.FC<Prop> = ({ setIsDeletingImages }) => {
     });
   };
 
-  const handleImgs = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImgs =  (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const fileList: FileList = e.target.files;
     const filesArray: File[] = Array.from(fileList);
-    filesArray.forEach((file, index) => {
+    filesArray.forEach(async(file, index) => {
       toast.loading(`Uploading image ${index}`, { id: file.name });
-      handleImageFile(file);
+      await handleImageFile(file);
     });
   };
 
