@@ -59,6 +59,8 @@ const ImageComponent: React.FC<ImageProps> = ({
             (max-width: 1536px) 33vw,
             25vw"
           onClick={() => clickHandler(imageData?.id)}
+          placeholder="blur"
+          blurDataURL={blurDataUrl}
         />
       </div>
     );

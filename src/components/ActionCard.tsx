@@ -10,26 +10,35 @@ interface Prop {
   setIsDeletingImages: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-type ImageProps = {
-  imgUrl: string;
-  orientation: string;
-}[];
+// type ImageProps = {
+//   imgUrl: string;
+//   orientation: string;
+// }[];
 
 const ActionCard: React.FC<Prop> = ({ setIsDeletingImages }) => {
   // const [image, setImage] = useState<File>();
-  const [images, setImages] = useState<ImageProps>([]);
-
-  const generateMultiImg = api.image.uploadMultipleImages.useMutation({
-    onMutate: () => toast.loading("Uploading...", { id: "imageUpload" }),
-    onSuccess: () => toast.success("Done!", { id: "imageUpload" }),
+  // const [images, setImages] = useState<ImageProps>([]);
+  const [toastCounter, setToastCounter] = useState(0);
+  const uploadSingleImg = api.image.uploadSingleImage.useMutation({
+    onMutate: () =>
+      toast.loading("Uploading...", { id: toastCounter.toString() }),
+    onSuccess: () => toast.success("Done!", { id: toastCounter.toString() }),
     onError: (e) =>
       toast.error(`Error: ${e.data?.code || ""}`, {
-        id: "imageUpload",
+        id: toastCounter.toString(),
       }),
   });
-  const createMultiImage = () => generateMultiImg.mutate({ imgs: images });
+  // const generateMultiImg = api.image.uploadMultipleImages.useMutation({
+  //   onMutate: () => toast.loading("Uploading...", { id: "imageUpload" }),
+  //   onSuccess: () => toast.success("Done!", { id: "imageUpload" }),
+  //   onError: (e) =>
+  //     toast.error(`Error: ${e.data?.code || ""}`, {
+  //       id: "imageUpload",
+  //     }),
+  // });
+  // const createMultiImage = () => generateMultiImg.mutate({ imgs: images });
 
-  const handleImageFile = async(imgFile: File) => {
+  const handleImageFile = async (imgFile: File) => {
     const result = isImage(imgFile.name);
     if (!result) {
       const error = "File type should be a image";
@@ -42,53 +51,28 @@ const ActionCard: React.FC<Prop> = ({ setIsDeletingImages }) => {
       toast.error(error, { id: imgFile.name });
       return;
     }
-    const resizedImg = await resizeFile(imgFile) as string;
-    console.log('resizedImg', resizedImg);
+    const resizedImg = (await resizeFile(imgFile)) as string;
     const imgUrl = resizedImg;
     const img = new Image();
-      img.src = imgUrl;
-      img.onload = (e) => {
-        const image = e.target as HTMLImageElement;
-        // set Images with orientation;
-        if (image.width > image.height) {
-          setImages((prev) => [...prev, { imgUrl, orientation: "landscape" }]);
-        } else {
-          setImages((prev) => [...prev, { imgUrl, orientation: "portrait" }]);
-        }
-      };
-      toast.success("Success", { id: imgFile.name });
-    return;
-    const reader = new FileReader();
-    reader.readAsDataURL(imgFile);
-    reader.addEventListener("load", () => {
-      // use reader load to get image Url
-      const resFile = reader.result as string;
-      console.log("resFile", resFile);
-      const imgUrl = resFile;
-      // use onload to get image orientation
-      const img = new Image();
-      img.src = imgUrl;
-      img.onload = (e) => {
-        const image = e.target as HTMLImageElement;
-        // set Images with orientation;
-        if (image.width > image.height) {
-          setImages((prev) => [...prev, { imgUrl, orientation: "landscape" }]);
-        } else {
-          setImages((prev) => [...prev, { imgUrl, orientation: "portrait" }]);
-        }
-      };
-      // setImage to display, not needed at the moment
-      // setImage(img);
-      toast.success("Success", { id: imgFile.name });
-    });
+    img.src = imgUrl;
+    img.onload = (e) => {
+      const image = e.target as HTMLImageElement;
+      // set Images with orientation;
+      if (image.width > image.height) {
+        uploadSingleImg.mutate({ imgUrl, orientation: "landscape" });
+        setToastCounter((prev) => prev + 1);
+      } else {
+        uploadSingleImg.mutate({ imgUrl, orientation: "portrait" });
+        setToastCounter((prev) => prev + 1);
+      }
+    };
   };
 
-  const handleImgs =  (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImgs = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const fileList: FileList = e.target.files;
     const filesArray: File[] = Array.from(fileList);
-    filesArray.forEach(async(file, index) => {
-      toast.loading(`Uploading image ${index}`, { id: file.name });
+    filesArray.forEach(async (file) => {
       await handleImageFile(file);
     });
   };
@@ -96,12 +80,12 @@ const ActionCard: React.FC<Prop> = ({ setIsDeletingImages }) => {
   return (
     <>
       <div className="flex flex-col">
-        <button
+        {/* <button
           className="w-48 rounded-sm border-2 border-blue-400 py-2 px-1 text-white"
           onClick={createMultiImage}
         >
           Upload images
-        </button>
+        </button> */}
         <button
           className="w-48 rounded-sm border-2 border-blue-400 py-2 px-1 text-white"
           onClick={() => setIsDeletingImages((prev) => !prev)}

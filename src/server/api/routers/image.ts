@@ -9,6 +9,39 @@ export const imageRouter = createTRPCRouter({
   getImages: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.imagesUser.findMany();
   }),
+  uploadSingleImage: protectedProcedure
+    .input(
+      z.object({
+        imgUrl: z.string(),
+        orientation: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      if (!ctx.session || !ctx.session.user.id) return;
+      if (!admins.includes(ctx.session.user?.email || "")) {
+        throw new Error("You are not authorized to upload images");
+      }
+      // get current Month and Year
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = new Intl.DateTimeFormat("en-US", {
+        month: "short",
+      }).format(now);
+      // run cloudinary
+      const res = await cloudinary.uploader.upload(input.imgUrl, {
+        resource_type: "image",
+        folder: `${month} ${year}`,
+      });
+      // store responses from cloudinary
+      return ctx.prisma.imagesUser.create({
+        data: {
+          image_url: res.secure_url,
+          userId: ctx.session?.user.id,
+          orientation: input.orientation || "landscape",
+          folder: `${month} ${year}`,
+        },
+      });
+    }),
   uploadMultipleImages: protectedProcedure
     .input(
       z.object({
@@ -16,7 +49,6 @@ export const imageRouter = createTRPCRouter({
           z.object({
             imgUrl: z.string(),
             orientation: z.string(),
-            folder: z.string().optional(),
           })
         ),
       })

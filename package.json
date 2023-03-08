@@ -23,6 +23,8 @@
     "datauri": "^4.1.0",
     "google": "link:next/font/google",
     "gsap": "^3.11.4",
+    "imagemin": "^8.0.1",
+    "imagemin-jpegtran": "^7.0.0",
     "install": "^0.13.0",
     "next": "13.2.3",
     "next-auth": "^4.19.0",
@@ -35,6 +37,8 @@
     "zod": "^3.20.2"
   },
   "devDependencies": {
+    "@types/imagemin": "^8.0.1",
+    "@types/imagemin-jpegtran": "^5.0.1",
     "@types/node": "^18.11.18",
     "@types/prettier": "^2.7.2",
     "@types/react": "^18.0.26",
