@@ -66,7 +66,7 @@ const Home = (
               setSelectedDeleteImages={setSelectedDeleteImages}
               isDeletingImages={isDeletingImages}
             />
-          ))}
+          )).reverse()}
       </div>
       <footer>
         <div>footer here</div>
