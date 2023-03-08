@@ -43,7 +43,7 @@ const TopLeftCard: React.FC<Prop> = ({
           <div className="flex w-8/12 flex-col items-center gap-4 sm:gap-2">
             <div className="flex items-center gap-2">
               <div className="h-1 w-1 bg-slate-400" />
-              Birthday: Mar 2023
+              Birthday: 3th Mar 2023
             </div>
           </div>
           <div className="mt-2 mb-8 flex h-full flex-col justify-end sm:mb-2 md:mb-6 xl:mt-16 xl:mb-16">
