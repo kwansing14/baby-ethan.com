@@ -3,7 +3,7 @@ import { type UploadApiResponse } from "cloudinary";
 import cloudinary from "@/src/utils/cloudinary";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
 
-const admins = ["kwansing14@gmail.com"];
+const admins = ["kwansing14@gmail.com", "carolinepua@hotmail.com"];
 
 export const imageRouter = createTRPCRouter({
   getImages: publicProcedure.query(({ ctx }) => {
