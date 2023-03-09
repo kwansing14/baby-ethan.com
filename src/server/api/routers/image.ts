@@ -2,8 +2,7 @@ import { z } from "zod";
 import { type UploadApiResponse } from "cloudinary";
 import cloudinary from "@/src/utils/cloudinary";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
-
-const admins = ["kwansing14@gmail.com", "carolinepua@hotmail.com"];
+import { admins } from "@/src/utils/admins";
 
 export const imageRouter = createTRPCRouter({
   getImages: publicProcedure.query(({ ctx }) => {
