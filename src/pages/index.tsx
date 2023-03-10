@@ -68,9 +68,9 @@ const Home = (
             />
           )).reverse()}
       </div>
-      <footer>
+      {/* <footer>
         <div>footer here</div>
-      </footer>
+      </footer> */}
       {/* <Background /> */}
     </div>
   );
