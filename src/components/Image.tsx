@@ -41,7 +41,7 @@ const ImageComponent: React.FC<ImageProps> = ({
 
   if (imageData?.orientation === "landscape") {
     return (
-      <div className="relative aspect-[4/3]">
+      <div className="relative aspect-[4.127/3]">
         <Image
           alt="photo 1"
           className={clsx(
@@ -67,7 +67,7 @@ const ImageComponent: React.FC<ImageProps> = ({
   }
   if (imageData?.orientation === "portrait") {
     return (
-      <div className="relative aspect-[3/4] sm:row-span-2 sm:aspect-auto">
+      <div className="relative aspect-[3/4.5] row-span-2">
         <Image
           alt="photo 1"
           className={clsx(

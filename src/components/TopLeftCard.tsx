@@ -35,9 +35,9 @@ const TopLeftCard: React.FC<Prop> = ({
 
   if (!cardSwitched) {
     return (
-      <div className="col-span-1 row-span-1 h-[450px] overflow-hidden rounded-lg bg-black sm:h-auto md:col-span-1 md:h-auto  xl:col-span-1 xl:row-span-2">
+      <div className="relative row-span-1 aspect-[3/3] sm:aspect-[4.127/3] rounded-lg bg-black lg:row-span-2 lg:aspect-[3/4.5]">
         <div className="flex h-full w-full flex-col items-center">
-          <div className="mt-1 flex h-auto w-full justify-center xl:mt-12">
+          <div className="mt-1 flex h-auto w-10/12 md:w-full justify-center xl:mt-12">
             <SvgAnimation />
           </div>
           <div className="text-2xl md:mt-1 md:mb-1 xl:mb-6 xl:mt-6">
