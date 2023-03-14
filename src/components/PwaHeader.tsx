@@ -42,7 +42,7 @@ const PwaHeader = () => {
         sizes="16x16"
         href="/fanvicon/favicon-16x16.png"
       />
-      <link rel="manifest" href="favicon/site.webmanifest" />
+      <link rel="manifest" href="/manifest.json" />
       <link
         rel="mask-icon"
         href="/favicon/safari-pinned-tab.svg"
