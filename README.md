@@ -1,5 +1,5 @@
 # Baby Ethan Image Gallery
-![page speed insights]()
+![page speed insights](/public//pagespeedinsights.png)
 
 ## Techstack
 - [Next.js](https://nextjs.org)
