@@ -13,7 +13,7 @@ import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "@/src/server/api/root";
 import { createInnerTRPCContext } from "@/src/server/api/trpc";
 import superjson from "superjson";
-import PwaHeader from "@/src/components/PwaHeader";
+// import PwaHeader from "@/src/components/PwaHeader";
 
 export const getServerSideProps = async ({}) => {
   const ssg = createProxySSGHelpers({
@@ -75,11 +75,11 @@ const Home = (
         />
         <meta name="msapplication-TileColor" content="#da532c" />
         <meta name="theme-color" content="#ffffff" />
-        <meta
+        {/* <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
-        />
-        <PwaHeader />
+        /> */}
+        {/* <PwaHeader /> */}
       </Head>
       <div className="grid w-full max-w-[1960px] grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
         <TopLeftCard
