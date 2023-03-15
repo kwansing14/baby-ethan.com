@@ -1,7 +1,7 @@
 # Baby Ethan Image Gallery
 ![page speed insights](/public//pagespeedinsights.png)
 ## Link
-- [link](https://baby-ethan.com)
+- [website](https://baby-ethan.com){:target="_blank" rel="noopener"}
 ## Techstack
 - [Next.js](https://nextjs.org)
 - [NextAuth.js](https://next-auth.js.org)
