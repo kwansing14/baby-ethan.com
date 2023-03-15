@@ -3,12 +3,14 @@ import { useSession } from "next-auth/react";
 import { RxThickArrowLeft } from "react-icons/rx";
 import { CgProfile } from "react-icons/cg";
 // import clsx from "clsx";
+import Link from "next/link";
 import SvgAnimation from "@/src/components/SvgAnimation";
 import LoginButton from "@/src/components/loginButton";
 import ActionCard from "@/src/components/ActionCard";
 import BottomBullets from "@/src/components/BottomBullets";
 import DeletingImagesCard from "@/src/components/DeletingImagesCard";
 import { isAdmin } from "@/src/utils/admins";
+import { BsGithub } from "react-icons/bs";
 
 interface Prop {
   isDeletingImages: boolean;
@@ -35,9 +37,9 @@ const TopLeftCard: React.FC<Prop> = ({
 
   if (!cardSwitched) {
     return (
-      <div className="relative row-span-1 aspect-[3/3] sm:aspect-[4.127/3] rounded-lg bg-black lg:row-span-2 lg:aspect-[3/4.5]">
+      <div className="relative row-span-1 aspect-[3/3] rounded-lg bg-black sm:aspect-[4.127/3] lg:row-span-2 lg:aspect-[3/4.5]">
         <div className="flex h-full w-full flex-col items-center">
-          <div className="mt-1 flex h-auto w-10/12 md:w-full justify-center xl:mt-12">
+          <div className="mt-1 flex h-auto w-10/12 justify-center md:w-full xl:mt-12">
             <SvgAnimation />
           </div>
           <div className="text-2xl md:mt-1 md:mb-1 xl:mb-6 xl:mt-6">
@@ -49,7 +51,7 @@ const TopLeftCard: React.FC<Prop> = ({
               Birthday: 3th Mar 2023
             </div>
           </div>
-          <div className="mt-2 mb-8 flex h-full flex-col justify-end sm:mb-2 md:mb-6 xl:mt-16 xl:mb-16">
+          <div className="flex h-full w-full flex-col items-end justify-end pb-4 pr-4">
             {session?.user && (
               <button
                 className="w-48 rounded-sm border-2 border-gray-600 py-1 transition-all duration-300 hover:bg-slate-500"
@@ -57,6 +59,14 @@ const TopLeftCard: React.FC<Prop> = ({
               >
                 Actions
               </button>
+            )}
+            {!session?.user && (
+              <Link
+                href="https://github.com/kwansing14/baby-ethan.com"
+                target="_blank"
+              >
+                <BsGithub className="h-6 w-6" />
+              </Link>
             )}
           </div>
         </div>
