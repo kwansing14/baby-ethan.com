@@ -45,12 +45,6 @@ const TopLeftCard: React.FC<Prop> = ({
           <div className="text-2xl md:mt-1 md:mb-1 xl:mb-6 xl:mt-6">
             {"Ethan's photos gallery!"}
           </div>
-          <div className="flex w-8/12 flex-col items-center gap-4 sm:gap-2">
-            <div className="flex items-center gap-2">
-              <div className="h-1 w-1 bg-slate-400" />
-              Birthday: 3th Mar 2023
-            </div>
-          </div>
           <div className="flex h-full w-full flex-col items-end justify-end pb-4 pr-4">
             {session?.user && (
               <button
