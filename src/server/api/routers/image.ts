@@ -6,7 +6,9 @@ import { admins } from "@/src/utils/admins";
 
 export const imageRouter = createTRPCRouter({
   getImages: publicProcedure.query(({ ctx }) => {
-    return ctx.prisma.imagesUser.findMany();
+    return ctx.prisma.imagesUser.findMany({
+      orderBy: { lastModified: "desc" },
+    });
   }),
   uploadSingleImage: protectedProcedure
     .input(
