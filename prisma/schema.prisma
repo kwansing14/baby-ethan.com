@@ -63,10 +63,11 @@ model VerificationToken {
 }
 
 model ImagesUser {
-    id          String   @id @default(cuid())
-    userId      String
-    image_url   String
-    orientation String
-    user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-    folder      String
+    id           String @id @default(cuid())
+    userId       String
+    image_url    String
+    orientation  String
+    user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+    folder       String
+    lastModified Int
 }

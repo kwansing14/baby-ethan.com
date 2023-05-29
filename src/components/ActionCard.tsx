@@ -59,10 +59,10 @@ const ActionCard: React.FC<Prop> = ({ setIsDeletingImages }) => {
       const image = e.target as HTMLImageElement;
       // set Images with orientation;
       if (image.width > image.height) {
-        uploadSingleImg.mutate({ imgUrl, orientation: "landscape" });
+        uploadSingleImg.mutate({ imgUrl, lastModified: imgFile.lastModified, orientation: "landscape" });
         setToastCounter((prev) => prev + 1);
       } else {
-        uploadSingleImg.mutate({ imgUrl, orientation: "portrait" });
+        uploadSingleImg.mutate({ imgUrl, lastModified: imgFile.lastModified, orientation: "portrait" });
         setToastCounter((prev) => prev + 1);
       }
     };
