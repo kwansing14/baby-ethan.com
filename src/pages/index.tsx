@@ -40,11 +40,11 @@ const Home = (
   const [selectedDeleteImages, setSelectedDeleteImages] = useState<string[]>(
     []
   );
-    
+
   useEffect(() => {
     if (imagesData) setDisplayImages(imagesData);
   }, [imagesData]);
-  
+
   return (
     <div className="flex flex-col items-center bg-gray-900 text-white">
       <Head>

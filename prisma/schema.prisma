@@ -69,5 +69,5 @@ model ImagesUser {
     orientation  String
     user         User   @relation(fields: [userId], references: [id], onDelete: Cascade)
     folder       String
-    lastModified BigInt
+    lastModified String
 }

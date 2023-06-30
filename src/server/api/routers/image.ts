@@ -13,7 +13,7 @@ export const imageRouter = createTRPCRouter({
   uploadSingleImage: protectedProcedure
     .input(
       z.object({
-        lastModified: z.number(),
+        lastModified: z.string(),
         imgUrl: z.string(),
         orientation: z.string(),
       })
@@ -37,7 +37,7 @@ export const imageRouter = createTRPCRouter({
       // store responses from cloudinary
       return ctx.prisma.imagesUser.create({
         data: {
-          lastModified: input.lastModified || 0,
+          lastModified: input.lastModified || "",
           image_url: res.secure_url,
           userId: ctx.session?.user.id,
           orientation: input.orientation || "landscape",
@@ -50,7 +50,7 @@ export const imageRouter = createTRPCRouter({
       z.object({
         imgs: z.array(
           z.object({
-            lastModified: z.number(),
+            lastModified: z.string(),
             imgUrl: z.string(),
             orientation: z.string(),
           })
@@ -80,7 +80,7 @@ export const imageRouter = createTRPCRouter({
       // prisma create
       return await ctx.prisma.imagesUser.createMany({
         data: res.map((img, index) => ({
-          lastModified: input.imgs[index]?.lastModified || 0,
+          lastModified: input.imgs[index]?.lastModified || "",
           image_url: img.secure_url,
           userId: ctx.session?.user.id,
           orientation: input.imgs[index]?.orientation || "landscape",

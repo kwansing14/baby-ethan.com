@@ -39,6 +39,8 @@ const ActionCard: React.FC<Prop> = ({ setIsDeletingImages }) => {
   // const createMultiImage = () => generateMultiImg.mutate({ imgs: images });
 
   const handleImageFile = async (imgFile: File) => {
+    console.log(imgFile.lastModified);
+    console.log(typeof imgFile.lastModified);
     const result = isImage(imgFile.name);
     if (!result) {
       const error = "File type should be a image";
@@ -59,10 +61,18 @@ const ActionCard: React.FC<Prop> = ({ setIsDeletingImages }) => {
       const image = e.target as HTMLImageElement;
       // set Images with orientation;
       if (image.width > image.height) {
-        uploadSingleImg.mutate({ imgUrl, lastModified: imgFile.lastModified, orientation: "landscape" });
+        uploadSingleImg.mutate({
+          imgUrl,
+          lastModified: imgFile.lastModified.toString(),
+          orientation: "landscape",
+        });
         setToastCounter((prev) => prev + 1);
       } else {
-        uploadSingleImg.mutate({ imgUrl, lastModified: imgFile.lastModified, orientation: "portrait" });
+        uploadSingleImg.mutate({
+          imgUrl,
+          lastModified: imgFile.lastModified.toString(),
+          orientation: "portrait",
+        });
         setToastCounter((prev) => prev + 1);
       }
     };
