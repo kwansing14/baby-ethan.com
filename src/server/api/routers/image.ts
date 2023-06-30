@@ -37,7 +37,7 @@ export const imageRouter = createTRPCRouter({
       // store responses from cloudinary
       return ctx.prisma.imagesUser.create({
         data: {
-          lastModified: input.lastModified,
+          lastModified: input.lastModified || 0,
           image_url: res.secure_url,
           userId: ctx.session?.user.id,
           orientation: input.orientation || "landscape",
