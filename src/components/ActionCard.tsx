@@ -20,7 +20,16 @@ const ActionCard: React.FC<Prop> = ({ setIsDeletingImages }) => {
       }),
   });
 
+  function stringify(obj: any) {
+    const replacer = [];
+    for (const key in obj) {
+      replacer.push(key);
+    }
+    return JSON.stringify(obj, replacer);
+  }
+
   const handleImageFile = async (imgFile: File) => {
+    alert(stringify(imgFile));
     console.log(imgFile);
     const result = isImage(imgFile.name);
     if (!result) {
