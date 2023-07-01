@@ -88,22 +88,16 @@ const Home = (
           setIsDeletingImages={setIsDeletingImages}
         />
         {displayImages &&
-          displayImages
-            .map((x, i) => (
-              <ImageComponent
-                key={i}
-                imageData={x}
-                selectedDeleteImages={selectedDeleteImages}
-                setSelectedDeleteImages={setSelectedDeleteImages}
-                isDeletingImages={isDeletingImages}
-              />
-            ))
-            .reverse()}
+          displayImages.map((x, i) => (
+            <ImageComponent
+              key={i}
+              imageData={x}
+              selectedDeleteImages={selectedDeleteImages}
+              setSelectedDeleteImages={setSelectedDeleteImages}
+              isDeletingImages={isDeletingImages}
+            />
+          ))}
       </div>
-      {/* <footer>
-        <div>footer here</div>
-      </footer> */}
-      {/* <Background /> */}
     </div>
   );
 };

@@ -1,23 +1,14 @@
 import { useState } from "react";
-// import Image from "next/image";
 import toast from "react-hot-toast";
 import { isImage, validateSize } from "@/src/utils/fileValidation";
 import { api } from "@/src/utils/api";
 import { resizeFile } from "@/src/utils/imageResizer";
-// type Orientation = "portrait" | "landscape" | "";
 
 interface Prop {
   setIsDeletingImages: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-// type ImageProps = {
-//   imgUrl: string;
-//   orientation: string;
-// }[];
-
 const ActionCard: React.FC<Prop> = ({ setIsDeletingImages }) => {
-  // const [image, setImage] = useState<File>();
-  // const [images, setImages] = useState<ImageProps>([]);
   const [toastCounter, setToastCounter] = useState(0);
   const uploadSingleImg = api.image.uploadSingleImage.useMutation({
     onMutate: () =>
@@ -28,19 +19,9 @@ const ActionCard: React.FC<Prop> = ({ setIsDeletingImages }) => {
         id: toastCounter.toString(),
       }),
   });
-  // const generateMultiImg = api.image.uploadMultipleImages.useMutation({
-  //   onMutate: () => toast.loading("Uploading...", { id: "imageUpload" }),
-  //   onSuccess: () => toast.success("Done!", { id: "imageUpload" }),
-  //   onError: (e) =>
-  //     toast.error(`Error: ${e.data?.code || ""}`, {
-  //       id: "imageUpload",
-  //     }),
-  // });
-  // const createMultiImage = () => generateMultiImg.mutate({ imgs: images });
 
   const handleImageFile = async (imgFile: File) => {
-    console.log(imgFile.lastModified);
-    console.log(typeof imgFile.lastModified);
+    console.log(imgFile);
     const result = isImage(imgFile.name);
     if (!result) {
       const error = "File type should be a image";
@@ -90,12 +71,6 @@ const ActionCard: React.FC<Prop> = ({ setIsDeletingImages }) => {
   return (
     <>
       <div className="flex flex-col">
-        {/* <button
-          className="w-48 rounded-sm border-2 border-blue-400 py-2 px-1 text-white"
-          onClick={createMultiImage}
-        >
-          Upload images
-        </button> */}
         <button
           className="w-48 rounded-sm border-2 border-blue-400 py-2 px-1 text-white"
           onClick={() => setIsDeletingImages((prev) => !prev)}
@@ -113,18 +88,6 @@ const ActionCard: React.FC<Prop> = ({ setIsDeletingImages }) => {
             onChange={handleImgs}
           />
         </label>
-        <div>
-          {/* use this when want to display image */}
-          {/* {image && (
-            <Image
-              alt="card"
-              width={200}
-              height={200}
-              src={imgSrc}
-              className="my-5 h-auto w-48 basis-1/2 border-2 border-red-200"
-            />
-          )} */}
-        </div>
       </div>
     </>
   );
