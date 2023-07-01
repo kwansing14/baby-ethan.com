@@ -29,7 +29,7 @@ const ActionCard: React.FC<Prop> = ({ setIsDeletingImages }) => {
   }
 
   const handleImageFile = async (imgFile: File) => {
-    alert(stringify(imgFile));
+    // alert(stringify(imgFile));
     console.log(imgFile);
     const result = isImage(imgFile.name);
     if (!result) {
