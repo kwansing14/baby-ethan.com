@@ -1,7 +1,8 @@
 interface Prop {
   cn: string;
+  strokeWidth?: number;
 }
-const Ethan2: React.FC<Prop> = ({ cn }) => {
+const Ethan2: React.FC<Prop> = ({ cn, strokeWidth = 4 }) => {
   return (
     <svg
       className={cn}
@@ -9,7 +10,7 @@ const Ethan2: React.FC<Prop> = ({ cn }) => {
       fill="none"
       stroke="#000"
       strokeLinecap="round"
-      strokeWidth="4"
+      strokeWidth={strokeWidth}
       viewBox="-10 0 237.41 140"
     >
       <path

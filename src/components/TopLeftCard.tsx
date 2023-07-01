@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { RxThickArrowLeft } from "react-icons/rx";
 import { CgProfile } from "react-icons/cg";
-// import clsx from "clsx";
+import clsx from "clsx";
 import Link from "next/link";
 import SvgAnimation from "@/src/components/SvgAnimation";
 import LoginButton from "@/src/components/loginButton";
@@ -11,17 +11,23 @@ import BottomBullets from "@/src/components/BottomBullets";
 import DeletingImagesCard from "@/src/components/DeletingImagesCard";
 import { isAdmin } from "@/src/utils/admins";
 import { BsGithub } from "react-icons/bs";
+import { TfiLayoutGrid2 } from "react-icons/tfi";
+import { twMerge } from "tailwind-merge";
 
 interface Prop {
   isDeletingImages: boolean;
   setIsDeletingImages: React.Dispatch<React.SetStateAction<boolean>>;
   selectedDeleteImages: string[];
+  gridLayout: string;
+  setGridLayout: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const TopLeftCard: React.FC<Prop> = ({
   isDeletingImages,
   setIsDeletingImages,
   selectedDeleteImages,
+  gridLayout,
+  setGridLayout,
 }) => {
   const [cardSwitched, setCardSwitched] = useState(false);
   const [hoverLogout, setHoverLogout] = useState(false);
@@ -37,15 +43,33 @@ const TopLeftCard: React.FC<Prop> = ({
 
   if (!cardSwitched) {
     return (
-      <div className="relative row-span-1 aspect-[3/3] rounded-lg bg-black sm:aspect-[4.127/3] lg:row-span-2 lg:aspect-[3/4.5]">
+      <div
+        className={twMerge(
+          "relative row-span-1 aspect-[3/3] rounded-lg bg-black sm:aspect-[4.127/3] lg:row-span-2 lg:aspect-[3/4.5]",
+          gridLayout === "grid-cols-1" && " aspect-[3/3]",
+          gridLayout === "grid-cols-2" && "aspect-[4.127/3]"
+        )}
+      >
         <div className="flex h-full w-full flex-col items-center">
-          <div className="mt-1 flex h-auto w-10/12 justify-center md:w-full xl:mt-12">
-            <SvgAnimation />
+          <div
+            className={twMerge(
+              "mt-1 flex h-auto w-10/12 justify-center md:w-full xl:mt-12",
+              gridLayout === "grid-cols-1" && "w-10/12",
+              gridLayout === "grid-cols-2" && "w-6/12"
+            )}
+          >
+            <SvgAnimation gridLayout={gridLayout} />
           </div>
-          <div className="text-2xl md:mt-1 md:mb-1 xl:mb-6 xl:mt-6">
+          <div
+            className={clsx(
+              "md:mt-1 md:mb-1 xl:mb-6 xl:mt-6",
+              gridLayout === "grid-cols-1" && "text-2xl",
+              gridLayout === "grid-cols-2" && "text-sm"
+            )}
+          >
             {"Ethan's photos gallery!"}
           </div>
-          <div className="flex h-full w-full flex-col items-end justify-end pb-4 pr-4">
+          <div className="flex h-full w-full flex-col items-end justify-end px-4 pb-4">
             {session?.user && (
               <button
                 className="w-48 rounded-sm border-2 border-gray-600 py-1 transition-all duration-300 hover:bg-slate-500"
@@ -55,12 +79,32 @@ const TopLeftCard: React.FC<Prop> = ({
               </button>
             )}
             {!session?.user && (
-              <Link
-                href="https://github.com/kwansing14/baby-ethan.com"
-                target="_blank"
-              >
-                <BsGithub className="h-6 w-6" />
-              </Link>
+              <div className="flex w-full justify-between">
+                <div className="w-6" />
+                <div className="flex items-center gap-4 sm:hidden">
+                  <div
+                    className={clsx(
+                      "rounded-sm border border-white",
+                      gridLayout === "grid-cols-1" && "h-5 w-5",
+                      gridLayout === "grid-cols-2" && "h-4 w-4"
+                    )}
+                    onClick={() => setGridLayout("grid-cols-1")}
+                  />
+                  <TfiLayoutGrid2
+                    className={clsx(
+                      gridLayout === "grid-cols-1" && "h-6 w-6",
+                      gridLayout === "grid-cols-2" && "h-4 w-4"
+                    )}
+                    onClick={() => setGridLayout("grid-cols-2")}
+                  />
+                </div>
+                <Link
+                  href="https://github.com/kwansing14/baby-ethan.com"
+                  target="_blank"
+                >
+                  <BsGithub className="h-6 w-6" />
+                </Link>
+              </div>
             )}
           </div>
         </div>

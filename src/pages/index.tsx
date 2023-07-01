@@ -8,7 +8,6 @@ import ImageComponent from "../components/Image";
 // import { signIn, signOut, useSession } from "next-auth/react";
 import { api } from "@/src/utils/api";
 import TopLeftCard from "../components/TopLeftCard";
-
 import { createProxySSGHelpers } from "@trpc/react-query/ssg";
 import { appRouter } from "@/src/server/api/root";
 import { createInnerTRPCContext } from "@/src/server/api/trpc";
@@ -40,6 +39,7 @@ const Home = (
   const [selectedDeleteImages, setSelectedDeleteImages] = useState<string[]>(
     []
   );
+  const [gridLayout, setGridLayout] = useState("grid-cols-1");
 
   useEffect(() => {
     if (imagesData) setDisplayImages(imagesData);
@@ -81,13 +81,20 @@ const Home = (
         /> */}
         {/* <PwaHeader /> */}
       </Head>
-      <div className="grid w-full max-w-[1960px] grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div
+        className={
+          "grid w-full max-w-[1960px] gap-4 p-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 " +
+          `${gridLayout}`
+        }
+      >
         <TopLeftCard
           selectedDeleteImages={selectedDeleteImages}
           isDeletingImages={isDeletingImages}
           setIsDeletingImages={setIsDeletingImages}
+          gridLayout={gridLayout}
+          setGridLayout={setGridLayout}
         />
-        {displayImages &&
+        {!!displayImages &&
           displayImages.map((x, i) => (
             <ImageComponent
               key={i}

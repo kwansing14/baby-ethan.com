@@ -3,7 +3,11 @@ import { gsap } from "gsap";
 // import Ethan from "@/src/assets/svg/Ethan";
 import Ethan2 from "@/src/assets/svg/Ethan2";
 
-const SvgAnimation = () => {
+interface Prop {
+  gridLayout: string;
+}
+
+const SvgAnimation: React.FC<Prop> = ({ gridLayout }) => {
   // Create a GreenSock timeline that will repeat infinitely
   const tl = gsap.timeline({
     id: "Timeline",
@@ -54,7 +58,7 @@ const SvgAnimation = () => {
   return (
     <div className="h-auto w-full sm:w-8/12 xl:w-full">
       {/* <Ethan cn="motion" /> */}
-      <Ethan2 cn="motion" />
+      <Ethan2 cn="motion" strokeWidth={gridLayout === "grid-cols-1" ? 4 : 1} />
     </div>
   );
 };
